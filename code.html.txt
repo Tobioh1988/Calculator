@@ -1,0 +1,82 @@
+<html><head> 
+  <meta charset="UTF-8">
+  <title>Depot Rechner</title> 
+  <style>
+   .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+   }
+
+   .input-field {
+    margin-bottom: 10px;
+   }
+
+   .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+   }
+
+   .result {
+    margin-top: 20px;
+    font-weight: bold;
+   }
+  </style> 
+ </head> 
+ <body> 
+  <h1>Depot Rechner</h1>
+  <form id="calculation-form"> 
+   <div class="input-field"> <label for="depotwert">Depotwert:</label> 
+    <input type="number" id="depotwert" name="depotwert"> 
+   </div> 
+   <div class="input-field"> <label for="jahrliche_dividende">Dividende pro Jahr:</label> 
+    <input type="number" id="jahrliche_dividende" name="jahrliche_dividende"> 
+   </div> 
+   <div class="input-field"> <label for="einzahlung_pro_jahr">Einzahlung pro Jahr:</label> 
+    <input type="number" id="einzahlung_pro_jahr" name="einzahlung_pro_jahr"> 
+   </div> 
+   <div class="input-field"> <label for="anlagezeitraum">Anlagezeitraum (Jahre):</label> 
+    <input type="number" id="anlagezeitraum" name="anlagezeitraum"> 
+   </div> 
+   <div class="input-field"> <label for="dividendensteigerung">Dividendensteigerung (%):</label> 
+    <input type="number" id="dividendensteigerung" name="dividendensteigerung"> 
+   </div> 
+   <div class="input-field"> <label for="kursgewinn">Kursgewinn (%):</label> 
+    <input type="number" id="kursgewinn" name="kursgewinn"> 
+   </div> <button type="submit" class="btn">Berechnen</button> 
+  </form> 
+  <div id="result" class="result"></div> 
+  <script>
+    document.getElementById("calculation-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      berechnen();
+    });
+
+    function berechnen() {
+      var depotwert = parseFloat(document.getElementById("depotwert").value) || 0;
+      var jahrliche_dividende = parseFloat(document.getElementById("jahrliche_dividende").value) || 0;
+      var einzahlung_pro_jahr = parseFloat(document.getElementById("einzahlung_pro_jahr").value) || 0;
+      var anlagezeitraum = parseFloat(document.getElementById("anlagezeitraum").value)
+      var anlagezeitraum = parseFloat(document.getElementById("anlagezeitraum").value) || 0;
+      var dividendensteigerung = parseFloat(document.getElementById("dividendensteigerung").value) || 0;
+      var kursgewinn = parseFloat(document.getElementById("kursgewinn").value) || 0;
+
+      // Berechnungen
+      var endwert = depotwert;
+      for (var i = 1; i <= anlagezeitraum; i++) {
+        endwert += (endwert * (dividendensteigerung / 100)) + einzahlung_pro_jahr + (endwert * (kursgewinn / 100));
+      }
+
+      // Ergebnis anzeigen
+      var resultElement = document.getElementById("result");
+      resultElement.textContent = "Der Endwert des Depots nach " + anlagezeitraum + " Jahren beträgt: " + endwert.toFixed(2) + " €";
+    }
+  </script> 
+ 
+<style id="dcoder_stylesheet"></style></body></html>
